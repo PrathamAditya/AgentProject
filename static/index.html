@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory-Aware Research Assistant</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <div class="logo">&#128218; Memory Agent</div>
+      <button id="new-thread" class="new-thread" title="Start a new conversation">
+        + New thread
+      </button>
+    </div>
+    <div id="thread-list" class="thread-list"></div>
+
+    <div class="memory-panel">
+      <div class="panel-title">Agent Memory (agent_memory.db)</div>
+      <div id="memory-counts" class="memory-counts"></div>
+    </div>
+  </aside>
+
+  <main class="chat">
+    <header class="chat-head">
+      <span id="current-thread" class="current-thread">thread</span>
+      <span id="budget" class="budget"></span>
+    </header>
+
+    <div id="messages" class="messages"></div>
+
+    <footer class="composer">
+      <textarea id="input" rows="1" placeholder="Ask about research papers, memory, tools... (Enter to send, Shift+Enter for newline)"></textarea>
+      <button id="send" class="send">Send</button>
+    </footer>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

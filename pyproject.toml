@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "live: requires network (default: excluded)",
+    "live_keyless: requires network, no API key",
+    "live_keyed: requires OPENAI_API_KEY",
+    "offline: runs without network",
+    "scripted: uses the scripted LLM client",
+]

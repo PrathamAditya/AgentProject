@@ -1,0 +1,86 @@
+[
+  {
+    "id": "seed-01-0001",
+    "thread_id": "seed-01",
+    "role": "user",
+    "content": "Find the Kestrel paper about streaming memory consolidation.",
+    "timestamp": "2026-01-05T09:01:00Z"
+  },
+  {
+    "id": "seed-01-0002",
+    "thread_id": "seed-01",
+    "role": "assistant",
+    "content": "I found it. Kestrel: Streaming Memory Consolidation for Long-Horizon Agents, by R. Marlow and T. Iversen (2025), id KX-2025-011. The headline claim is that tiered summary ledgers cut resumption errors by 41% on synthetic long-horizon tasks. I have saved the full notes to the knowledge base so we can refer back to them.",
+    "timestamp": "2026-01-05T09:01:12Z"
+  },
+  {
+    "id": "seed-01-0003",
+    "thread_id": "seed-01",
+    "role": "user",
+    "content": "What exactly is the tiered summary ledger? I did not quite follow the abstract.",
+    "timestamp": "2026-01-05T09:02:00Z"
+  },
+  {
+    "id": "seed-01-0004",
+    "thread_id": "seed-01",
+    "role": "assistant",
+    "content": "The tiered ledger keeps several summary levels instead of one transcript. A low tier stores fine detail for the most recent turns; higher tiers keep progressively compressed distillations of older activity. On resumption it walks down the ledger from coarsest to finest, pulling in only what the current task needs. That is how it keeps context costs flat.",
+    "timestamp": "2026-01-05T09:02:20Z"
+  },
+  {
+    "id": "seed-01-0005",
+    "thread_id": "seed-01",
+    "role": "user",
+    "content": "How was the 41% number measured?",
+    "timestamp": "2026-01-05T09:03:00Z"
+  },
+  {
+    "id": "seed-01-0006",
+    "thread_id": "seed-01",
+    "role": "assistant",
+    "content": "They ran a suite of synthetic long-horizon benchmarks stressing resumption behavior. The tiered-ledger agents reduced resumption errors by 41% versus a flat rolling-window baseline. Token spend stayed roughly flat as task length grew because stale detail is never reloaded unless it is needed.",
+    "timestamp": "2026-01-05T09:03:18Z"
+  },
+  {
+    "id": "seed-01-0007",
+    "thread_id": "seed-01",
+    "role": "user",
+    "content": "Does the paper discuss whether the ledger works for interrupted sessions specifically, or only clean session starts?",
+    "timestamp": "2026-01-05T09:04:00Z"
+  },
+  {
+    "id": "seed-01-0008",
+    "thread_id": "seed-01",
+    "role": "assistant",
+    "content": "The framing is about long-horizon and resumption more broadly, which includes interrupted sessions. The mechanism — reconstructing the thread by walking the ledger after a pause — is precisely what you would want for a session that was cut off for a long time and then revisited.",
+    "timestamp": "2026-01-05T09:04:25Z"
+  },
+  {
+    "id": "seed-01-0009",
+    "thread_id": "seed-01",
+    "role": "user",
+    "content": "Would you compare Kestrel to Heron, the other paper we looked at for tool routing?",
+    "timestamp": "2026-01-05T09:05:00Z"
+  },
+  {
+    "id": "seed-01-0010",
+    "thread_id": "seed-01",
+    "role": "assistant",
+    "content": "Kestrel and Heron solve different problems. Kestrel is about context and resumption — how to keep a long-running thread coherent and cheap. Heron is about tool selection — conditioning routing on entities so the model picks the right procedure. Both reduce errors, but along different axes: 41% fewer resumption errors versus halving tool-selection errors.",
+    "timestamp": "2026-01-05T09:05:40Z"
+  },
+  {
+    "id": "seed-01-0011",
+    "thread_id": "seed-01",
+    "role": "user",
+    "content": "Great. Can you save a short note that Kestrel is our primary reference for the consolidation design, and Heron is the secondary one for retrieval?",
+    "timestamp": "2026-01-05T09:06:00Z"
+  },
+  {
+    "id": "seed-01-0012",
+    "thread_id": "seed-01",
+    "role": "assistant",
+    "content": "Done. Kestrel KX-2025-011 is our primary reference for the consolidation design, and Heron HX-2024-007 is the secondary reference for retrieval and tool routing. I will carry both forward in this thread's memory.",
+    "timestamp": "2026-01-05T09:06:20Z"
+  }
+]

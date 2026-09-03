@@ -1,0 +1,75 @@
+OVERSIZED OUTPUT — RESEARCH FILLER CONTENT
+===========================================
+
+This file exists so that the fetch_notes acquisition tool has a guaranteed large
+return value (over 3,000 characters) that exercises the bounded-excerpt / tool-log
+path described in the memory-aware agent spec. It is authored filler, deliberately
+verbose, and is not meant to be a real academic summary. Because the tool returns
+the full text of a fixture notes file to the model, and because this particular
+notes file is deliberately long, the harness must log the complete output in the
+tool-log store and pass the model only a bounded excerpt together with a pointer to
+the full record.
+
+PARAGRAPH ONE
+
+Long-horizon agents are systems that must retain their purpose and their working
+context across many interactions over a single session and sometimes across many
+sessions. The fundamental tension is that the underlying language model has a
+finite context window, while the demands of a long-running task are effectively
+unbounded. If an agent tries to keep every token of every prior turn in the window,
+it will eventually collide with the model's maximum context size, either throwing
+an error or silently truncating history and losing important context. On the other
+hand, if an agent evicts aggressively and without care, it loses the very details a
+follow-up question is likely to need, and the user ends up repeating themselves.
+
+PARAGRAPH TWO
+
+The memory-aware approach treats an external database as the agent's memory core.
+Conversations, workflows, entities, summaries, and tool results are all persisted
+outside the model's context window. Each turn, the harness deterministically
+preloads the relevant slices of that memory, assembles them into a partitioned and
+self-describing prompt, and runs a budget check against the model's known context
+limit. When the assembled context grows past a critical threshold, the conversation
+segment is offloaded into summary memory, but in a recoverable way: the source rows
+are marked with a summary id, and the original transcript remains accessible in full
+by expanding that id. This pairing of a lossy summary in the live window with a
+lossless path back to the originals is the heart of recoverable consolidation.
+
+PARAGRAPH THREE
+
+Tools are also treated as memory. Each registered tool stores an enriched
+description and an embedding in a toolbox store, and at call time the harness
+retrieves only a focused subset of tools relevant to the current request. Tool
+executions are fully logged: the arguments, the complete result, a bounded preview,
+and the status are written to a tool-log store, and the model is shown a bounded
+excerpt plus the identifier of the full log entry. This keeps verbose tool outputs
+from crowding out the rest of the context while preserving a complete audit trail.
+
+PARAGRAPH FOUR
+
+Finally, the agent writes back what it learns. Every query and answer is persisted,
+workflows record the ordered steps and outcome of multi-step runs, entities are
+extracted and stored, and any externally acquired content is stored into the
+knowledge base with source metadata in the same call that retrieves it. The effect
+is that the agent improves across sessions rather than restarting from a blank
+state each time, and follow-up questions resolve without repeating discovery.
+
+This wrapper paragraph is appended purely to push the file well past the 4,000
+character minimum so that the oversized-output case is guaranteed to trigger. The
+exact character count does not matter, only that it comfortably exceeds the
+threshold that the bounded-excerpt logic uses to decide whether a tool result must
+be truncated for the model and fully preserved in the tool log.
+
+ANOTHER FILLER SECTION TO GUARANTEE LENGTH
+
+To be extra certain that this fixture exceeds the required four thousand character
+floor by a safe margin, we add one more block of deliberately repetitive filler
+prose. The purpose here is not informational; it exists only to inflate the byte
+count so that any plausible code path that measures the file length will observe a
+value clearly above three thousand and therefore route the output through the
+bounded-excerpt mechanism rather than passing the raw full result into the model
+context. This guarantees that the oversized-output failure mode, the one where a
+single verbose tool result would otherwise crowd out everything else in the window,
+is exercised every time the fetch_notes tool runs against this particular file. We
+count characters, not meaning, and we ensure redundancy across several sentences so
+that the counted length remains robust regardless of minor edits elsewhere.
